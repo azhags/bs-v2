@@ -348,8 +348,8 @@
               <span id="headerEaDot" class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
               <span id="headerEaStatusText">EA AKTIF</span>
             </span>
-            <span class="px-2.5 py-1 rounded-full text-[11px] font-mono font-medium neu-inset text-slate-600">
-              v2.00 • OnTick Decoupled
+            <span id="syncModeBadge" class="px-2.5 py-1 rounded-full text-[11px] font-mono font-medium neu-inset text-slate-600">
+              Mode: Simulasi Lokal
             </span>
           </div>
           <p class="text-xs sm:text-sm text-slate-500 mt-1">
@@ -534,108 +534,28 @@
               Reset Siklus EA
             </button>
           </div>
-        </div>
 
-        <!-- 2. WIB Trading Schedule Configurator (7 cols) -->
-        <div id="section-schedule" class="xl:col-span-7 neu-card p-5 sm:p-6 flex flex-col justify-between gap-5">
-          <div>
-            <div class="flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Pengaturan Waktu (UTC+7)</span>
-                <h2 class="text-base sm:text-lg font-bold text-slate-800 mt-0.5">Jadwal Mulai &amp; Berhenti Trading (WIB)</h2>
-                <p class="text-xs text-slate-500 mt-1">
-                  Atur jam operasional EA dalam Waktu Indonesia Barat (WIB). Mendukung rentang normal maupun melewati tengah malam.
-                </p>
+          <!-- GitHub / State Feed URL Configurator -->
+          <div class="pt-3 border-t border-slate-300/60 space-y-2">
+            <label for="telemetryFeedInput" class="block text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+              URL Feed State JSON (Raw GitHub / Gist / Bridge)
+            </label>
+            <div class="flex items-center gap-2">
+              <div class="neu-inset px-3 py-2 flex-1 min-w-0">
+                <input
+                  id="telemetryFeedInput"
+                  type="url"
+                  placeholder="https://raw.githubusercontent.com/user/repo/main/state.json"
+                  class="neu-input mono-num text-xs"
+                />
               </div>
-
-              <div class="flex items-center gap-3">
-                <span class="text-xs font-semibold text-slate-600">Filter WIB</span>
-                <button
-                  type="button"
-                  id="wibScheduleToggle"
-                  role="switch"
-                  aria-checked="true"
-                  aria-label="Aktifkan Filter Jadwal WIB"
-                  class="neu-toggle-track active"
-                >
-                  <span class="neu-toggle-thumb"></span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Time Inputs Grid -->
-            <div class="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div class="neu-card-sm p-3.5">
-                <label for="startTimeWib" class="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-2">
-                  Jam Mulai (WIB)
-                </label>
-                <div class="neu-inset px-3 py-2 flex items-center justify-between">
-                  <input id="startTimeWib" type="time" value="08:00" class="neu-input mono-num text-sm" />
-                </div>
-              </div>
-
-              <div class="neu-card-sm p-3.5">
-                <label for="endTimeWib" class="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-2">
-                  Jam Berhenti (WIB)
-                </label>
-                <div class="neu-inset px-3 py-2 flex items-center justify-between">
-                  <input id="endTimeWib" type="time" value="22:30" class="neu-input mono-num text-sm" />
-                </div>
-              </div>
-
-              <div class="neu-card-sm p-3.5">
-                <label for="gmtOffsetSelect" class="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-2">
-                  Offset GMT Server
-                </label>
-                <div class="neu-inset px-3 py-2">
-                  <select id="gmtOffsetSelect" class="neu-input mono-num text-sm cursor-pointer">
-                    <option value="0">GMT+0 (UTC)</option>
-                    <option value="1">GMT+1</option>
-                    <option value="2" selected>GMT+2 (EET)</option>
-                    <option value="3">GMT+3 (EEST/MSK)</option>
-                    <option value="7">GMT+7 (WIB)</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <!-- Close After Profit Toggle & Quick Presets -->
-            <div class="mt-4 neu-inset p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div>
-                <div class="text-xs sm:text-sm font-bold text-slate-800">
-                  Close All Setelah Posisi Profit Saat Jam WIB Habis
-                </div>
-                <div class="text-xs text-slate-500 mt-0.5">
-                  Jika jam WIB berakhir saat posisi masih minus, EA berhenti buka entry baru lalu Close All begitu akumulasi profit (&ge; $0.01).
-                </div>
-              </div>
-              <button
-                type="button"
-                id="closeAfterProfitToggle"
-                role="switch"
-                aria-checked="true"
-                aria-label="Close All Setelah Profit Saat Jam WIB Habis"
-                class="neu-toggle-track active"
-              >
-                <span class="neu-toggle-thumb"></span>
+              <button type="button" id="connectFeedBtn" class="neu-btn px-3.5 py-2 text-xs font-bold text-blue-700 shrink-0">
+                Hubungkan
               </button>
             </div>
-          </div>
-
-          <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
-            <div class="flex flex-wrap items-center gap-2 text-xs text-slate-500">
-              <span>Preset cepat:</span>
-              <button type="button" data-preset="08:00-22:30" class="neu-btn px-3 py-1.5 text-xs font-semibold text-slate-700">08:00 - 22:30</button>
-              <button type="button" data-preset="13:00-23:30" class="neu-btn px-3 py-1.5 text-xs font-semibold text-slate-700">13:00 - 23:30</button>
-              <button type="button" data-preset="20:00-02:00" class="neu-btn px-3 py-1.5 text-xs font-semibold text-slate-700">20:00 - 02:00</button>
-            </div>
-
-            <button type="button" id="saveScheduleBtn" class="neu-btn-blue px-5 py-2.5 text-xs font-bold flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              Terapkan Jadwal WIB
-            </button>
+            <p id="feedStatusHint" class="text-[11px] text-slate-400 leading-snug">
+              Catatan: Link halaman GitHub Pages (<span class="mono-num">github.io</span>) adalah halaman UI ini sendiri. Agar dashboard membaca data MT5, arahkan ke URL <span class="mono-num">raw.githubusercontent.com/.../state.json</span> atau endpoint bridge JSON.
+            </p>
           </div>
         </div>
       </section>
@@ -748,6 +668,8 @@
       startWib: "08:00",
       endWib: "22:30",
       gmtOffset: 2,
+      feedUrl: "",
+      isLiveFeedConnected: false,
       balance: 2450.00,
       todayProfit: 38.40,
       closedCycles: 6,
@@ -843,6 +765,19 @@
       if (currentDD > state.maxEquityDD) state.maxEquityDD = currentDD;
 
       const inWib = isWithinWibSchedule();
+
+      // Sync mode badge
+      const syncBadge = document.getElementById("syncModeBadge");
+      if (state.feedUrl && state.isLiveFeedConnected) {
+        syncBadge.textContent = "Mode: Live Feed Aktif";
+        syncBadge.className = "px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold neu-inset text-emerald-700";
+      } else if (state.feedUrl) {
+        syncBadge.textContent = "Mode: Menunggu Feed";
+        syncBadge.className = "px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold neu-inset text-amber-700";
+      } else {
+        syncBadge.textContent = "Mode: Simulasi Lokal";
+        syncBadge.className = "px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold neu-inset text-slate-600";
+      }
 
       // Header & Power status
       const badge = document.getElementById("headerEaBadge");
@@ -1017,8 +952,59 @@
       showToast("Siklus EA Di-reset", "Pasangan BUY_STOP dan SELL_STOP awal siap dipantau.", "info");
     }
 
+    function applyIncomingTelemetry(data) {
+      if (!data || typeof data !== "object") return;
+      if (typeof data.eaEnabled === "boolean") state.eaEnabled = data.eaEnabled;
+      if (typeof data.balance === "number") state.balance = data.balance;
+      if (typeof data.todayProfit === "number") state.todayProfit = data.todayProfit;
+      if (typeof data.closedCycles === "number") state.closedCycles = data.closedCycles;
+      if (typeof data.peakEquity === "number") state.peakEquity = data.peakEquity;
+      if (typeof data.maxEquityDD === "number") state.maxEquityDD = data.maxEquityDD;
+      if (typeof data.startWib === "string") state.startWib = data.startWib;
+      if (typeof data.endWib === "string") state.endWib = data.endWib;
+      if (Array.isArray(data.positions)) state.positions = data.positions;
+      if (Array.isArray(data.pendingOrders)) state.pendingOrders = data.pendingOrders;
+
+      if (typeof data.positions === "undefined" && typeof data.floating === "number" && state.positions.length === 0 && data.floating !== 0) {
+        state.positions = [
+          { ticket: 100001, type: data.floating >= 0 ? "BUY" : "SELL", lot: 0.01, openPrice: 0, sl: 0, profit: data.floating },
+        ];
+      }
+      state.isLiveFeedConnected = true;
+    }
+
+    async function fetchTelemetryFeed(showFeedback = false) {
+      const targetUrl = (state.feedUrl || "").trim();
+      if (!targetUrl) {
+        state.isLiveFeedConnected = false;
+        renderAll();
+        if (showFeedback) {
+          showToast("Info", "URL feed belum diisi; dashboard menampilkan data simulasi lokal.", "info");
+        }
+        return;
+      }
+
+      try {
+        const sep = targetUrl.includes("?") ? "&" : "?";
+        const res = await fetch(`${targetUrl}${sep}t=${Date.now()}`, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const payload = await res.json();
+        applyIncomingTelemetry(payload);
+        renderAll();
+        if (showFeedback) {
+          showToast("Feed Tersinkron", "Data terbaru berhasil dimuat dari URL feed.", "success");
+        }
+      } catch (err) {
+        state.isLiveFeedConnected = false;
+        renderAll();
+        if (showFeedback) {
+          showToast("Gagal Memuat Feed", `Periksa URL JSON/CORS: ${err.message}`, "danger");
+        }
+      }
+    }
+
     // --- Event Listeners ---
-    document.getElementById("masterPowerToggle").addEventListener("click", () => {
+    document.getElementById("masterPowerToggle")?.addEventListener("click", () => {
       state.eaEnabled = !state.eaEnabled;
       pushLog(state.eaEnabled ? "Master EA dihidupkan (ON)" : "Master EA dimatikan (OFF)");
       renderAll();
@@ -1029,7 +1015,7 @@
       );
     });
 
-    document.getElementById("wibScheduleToggle").addEventListener("click", (e) => {
+    document.getElementById("wibScheduleToggle")?.addEventListener("click", (e) => {
       state.wibFilterEnabled = !state.wibFilterEnabled;
       e.currentTarget.classList.toggle("active", state.wibFilterEnabled);
       e.currentTarget.setAttribute("aria-checked", String(state.wibFilterEnabled));
@@ -1038,7 +1024,7 @@
       showToast("Filter Jadwal WIB", state.wibFilterEnabled ? "Jadwal WIB aktif." : "Filter jam WIB dinonaktifkan.", "info");
     });
 
-    document.getElementById("closeAfterProfitToggle").addEventListener("click", (e) => {
+    document.getElementById("closeAfterProfitToggle")?.addEventListener("click", (e) => {
       state.closeAfterProfitWib = !state.closeAfterProfitWib;
       e.currentTarget.classList.toggle("active", state.closeAfterProfitWib);
       e.currentTarget.setAttribute("aria-checked", String(state.closeAfterProfitWib));
@@ -1052,10 +1038,10 @@
       );
     });
 
-    document.getElementById("saveScheduleBtn").addEventListener("click", () => {
-      const startVal = document.getElementById("startTimeWib").value || "08:00";
-      const endVal = document.getElementById("endTimeWib").value || "22:30";
-      const offsetVal = Number(document.getElementById("gmtOffsetSelect").value);
+    document.getElementById("saveScheduleBtn")?.addEventListener("click", () => {
+      const startVal = document.getElementById("startTimeWib")?.value || state.startWib || "08:00";
+      const endVal = document.getElementById("endTimeWib")?.value || state.endWib || "22:30";
+      const offsetVal = Number(document.getElementById("gmtOffsetSelect")?.value ?? state.gmtOffset);
 
       state.startWib = startVal;
       state.endWib = endVal;
@@ -1068,8 +1054,10 @@
     document.querySelectorAll("[data-preset]").forEach((btn) => {
       btn.addEventListener("click", () => {
         const [s, e] = btn.getAttribute("data-preset").split("-");
-        document.getElementById("startTimeWib").value = s;
-        document.getElementById("endTimeWib").value = e;
+        const startInput = document.getElementById("startTimeWib");
+        const endInput = document.getElementById("endTimeWib");
+        if (startInput) startInput.value = s;
+        if (endInput) endInput.value = e;
         state.startWib = s;
         state.endWib = e;
         renderAll();
@@ -1077,21 +1065,50 @@
       });
     });
 
-    document.getElementById("closeAllBtn").addEventListener("click", () => {
+    document.getElementById("closeAllBtn")?.addEventListener("click", () => {
       closeAllPositionsLogic("Close All Posisi");
     });
 
-    document.getElementById("resetEaBtn").addEventListener("click", resetEaCycleLogic);
-    document.getElementById("railResetBtn").addEventListener("click", resetEaCycleLogic);
+    document.getElementById("resetEaBtn")?.addEventListener("click", resetEaCycleLogic);
+    document.getElementById("railResetBtn")?.addEventListener("click", resetEaCycleLogic);
 
-    document.getElementById("forceSyncBtn").addEventListener("click", () => {
-      renderAll();
-      showToast("Sinkronisasi Selesai", "Data telemetry MT5 & jam WIB telah disegarkan.", "info");
+    document.getElementById("forceSyncBtn")?.addEventListener("click", () => {
+      if (state.feedUrl) {
+        fetchTelemetryFeed(true);
+      } else {
+        renderAll();
+        showToast("Sinkronisasi Selesai", "Data telemetry MT5 & jam WIB telah disegarkan.", "info");
+      }
     });
 
-    document.getElementById("simulateTickBtn").addEventListener("click", () => {
+    document.getElementById("connectFeedBtn")?.addEventListener("click", () => {
+      const inputEl = document.getElementById("telemetryFeedInput");
+      let val = (inputEl?.value || "").trim();
+
+      // Jika user memasukkan link repo/blob GitHub, bantu arahkan petunjuk ke raw URL
+      if (val.includes("github.com/") && val.includes("/blob/")) {
+        val = val.replace("github.com/", "raw.githubusercontent.com/").replace("/blob/", "/");
+        if (inputEl) inputEl.value = val;
+      }
+
+      state.feedUrl = val;
+      try {
+        localStorage.setItem("mt5_ea_feed_url", val);
+      } catch (e) {}
+
+      if (!val) {
+        state.isLiveFeedConnected = false;
+        renderAll();
+        showToast("Feed Dikocongkan", "Kembali ke mode simulasi lokal.", "info");
+        return;
+      }
+
+      fetchTelemetryFeed(true);
+    });
+
+    document.getElementById("simulateTickBtn")?.addEventListener("click", () => {
       if (!state.eaEnabled) {
-        showToast("EA Nonaktif", "Hidupkan saklar Master EA terlebih dahulu untuk simulasi tick.", "info");
+        showToast("EA Dimatikan", "Hidupkan saklar Master EA terlebih dahulu untuk simulasi tick.", "info");
         return;
       }
       if (state.positions.length === 0) {
@@ -1136,6 +1153,30 @@
     setInterval(() => {
       document.getElementById("liveWibClock").textContent = getCurrentWibString();
     }, 1000);
+
+    // Polling feed eksternal setiap 5 detik jika URL feed diisi
+    setInterval(() => {
+      if (state.feedUrl) {
+        fetchTelemetryFeed(false);
+      }
+    }, 5000);
+
+    // Muat URL dari query string (?feed=...) atau localStorage
+    (function initFeedUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const queryFeed = params.get("feed") || params.get("state") || params.get("github");
+      let savedFeed = "";
+      try {
+        savedFeed = localStorage.getItem("mt5_ea_feed_url") || "";
+      } catch (e) {}
+
+      const initialUrl = (queryFeed || savedFeed || "").trim();
+      if (initialUrl) {
+        state.feedUrl = initialUrl;
+        document.getElementById("telemetryFeedInput").value = initialUrl;
+        fetchTelemetryFeed(false);
+      }
+    })();
 
     // Initial render
     renderAll();
