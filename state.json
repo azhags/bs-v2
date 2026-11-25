@@ -1,0 +1,49 @@
+{
+"eaEnabled": true,
+"balance": 2450.00,
+"todayProfit": 38.40,
+"closedCycles": 6,
+"peakEquity": 2468.50,
+"maxEquityDD": 34.15,
+"maxAllowedDD": 45.00,
+"gridBasketTarget": 0.10,
+"startWib": "08:00",
+"endWib": "22:30",
+"gmtOffset": 2,
+"inCooldown": false,
+"cooldownRemainingSec": 0,
+"account": {
+"login": "80492173",
+"brokerServer": "ApexBull-MT5-Live02",
+"mode": "HEDGING • LIVE",
+"symbol": "XAUUSDm",
+"timeframe": "M1",
+"leverage": "1:500",
+"currency": "USD",
+"fillingMode": "ORDER_FILLING_FOK"
+},
+"positions": [
+{
+"ticket": 90411201,
+"type": "BUY",
+"lot": 0.01,
+"openPrice": 2742.50,
+"sl": 0.00,
+"profit": -5.40
+},
+{
+"ticket": 90411288,
+"type": "BUY",
+"lot": 0.02,
+"openPrice": 2739.50,
+"sl": 0.00,
+"profit": -1.80
+}
+],
+"pendingOrders": [],
+"logs": [
+"00:14:22 WIB • Grid BUY 0.02 lot terbuka (-150 ticks)",
+"00:11:05 WIB • BUY_STOP aktif; SELL_STOP dihapus",
+"00:09:40 WIB • Pasang BUY_STOP & SELL_STOP awal"
+]
+}
